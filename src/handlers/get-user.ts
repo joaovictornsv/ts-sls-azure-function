@@ -20,7 +20,7 @@ export const handler: AzureFunction = async (context: Context, req: HttpRequest)
       headers: {
         'Content-type': 'application-json',
       },
-      body: data,
+      body: { user: name, data },
     };
   }
 };

@@ -25,7 +25,8 @@ describe('get-user', () => {
 
     await handler(contextMock, requestMock);
 
-    expect(contextMock.res).to.have.property('body').to.equal('mock-user-data');
+    expect(contextMock.res.body).to.have.property('data').to.equal('mock-user-data');
+    expect(contextMock.res.body).to.have.property('user').to.equal('mock-name');
   });
 
   it('should not return a user if name not provided', async () => {
