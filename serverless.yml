@@ -69,21 +69,14 @@ plugins: # look for additional plugins in the community plugins repo: https://gi
   - serverless-webpack
 
 functions:
-  hello:
-    handler: src/handlers/hello.sayHello
-    events:
-      - http: true
-        methods:
-          - GET
-        authLevel: anonymous # can also be `function` or `admin`
-
-  goodbye:
-    handler: src/handlers/goodbye.sayGoodbye
+  get-user:
+    handler: src/handlers/get-user.handler
     events:
       - http: true
         methods:
           - GET
         authLevel: anonymous
+        route: user/{name}
   # The following are a few examples of other events you can configure:
   # storageBlob:
   #   handler: src/handlers/storageBlob.printMessage
