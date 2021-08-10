@@ -36,33 +36,38 @@ provider:
     VARIABLE_FOO: 'foo'
 
   # you can define apim configuration here
-  # apim:
-  #   apis:
-  #     - name: v1
-  #       subscriptionRequired: false # if true must provide an api key
-  #       displayName: v1
-  #       description: V1 sample app APIs
-  #       protocols:
-  #         - https
-  #       path: v1
-  #       tags:
-  #         - tag1
-  #         - tag2
-  #       authorization: none
-  #   cors:
-  #     allowCredentials: false
-  #     allowedOrigins:
-  #       - "*"
-  #     allowedMethods:
-  #       - GET
-  #       - POST
-  #       - PUT
-  #       - DELETE
-  #       - PATCH
-  #     allowedHeaders:
-  #       - "*"
-  #     exposeHeaders:
-  #       - "*"
+  apim:
+    apis:
+      - name: github-api
+        subscriptionRequired: false # if true must provide an api key
+        displayName: Github API Test
+        description: Github API Test - Description
+        protocols:
+          - https
+        path: github
+        # tags:
+        #   - tag1
+        #   - tag2
+        authorization: none
+
+    backends:
+      - name: github-backend
+        url: api
+
+    cors:
+      allowCredentials: false
+      allowedOrigins:
+        - "*"
+      allowedMethods:
+        - GET
+        - POST
+        - PUT
+        - DELETE
+        - PATCH
+      allowedHeaders:
+        - "*"
+      exposeHeaders:
+        - "*"
 
 plugins: # look for additional plugins in the community plugins repo: https://github.com/serverless/plugins
   - serverless-azure-functions
@@ -71,12 +76,19 @@ plugins: # look for additional plugins in the community plugins repo: https://gi
 functions:
   get-user:
     handler: src/handlers/get-user.handler
+    apim:
+      api: github-api
+      backend: github-backend
+      operations:
+        - method: get
+          urlTemplate: /user
+          displayName: GetUser
     events:
       - http: true
         methods:
           - GET
         authLevel: anonymous
-        route: user/{name}
+        route: user
   # The following are a few examples of other events you can configure:
   # storageBlob:
   #   handler: src/handlers/storageBlob.printMessage

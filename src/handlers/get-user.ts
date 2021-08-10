@@ -3,7 +3,7 @@ import { api } from '../utils/api';
 
 
 export const handler: AzureFunction = async (context: Context, req: HttpRequest): Promise<void> => {
-  const { name } = req.params;
+  const { name } = req.query;
   context.log(`Get ${name} data`);
   if (!name) {
     context.res = {
